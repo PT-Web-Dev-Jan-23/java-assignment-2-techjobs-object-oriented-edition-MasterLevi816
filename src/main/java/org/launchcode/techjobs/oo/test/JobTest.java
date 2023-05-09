@@ -24,9 +24,9 @@ public class JobTest {
 
     @Test
     public void testSettingJobId() {
-    Job name = new Job();
-    Job employer = new Job();
-    assertNotEquals(name, employer);
+    Job firstJob = new Job();
+    Job seccondJob = new Job();
+    assertNotEquals(firstJob, seccondJob);
     }
 
     @Test
@@ -68,6 +68,39 @@ public class JobTest {
         assertFalse(jobA == jobB);
     }
 
+    @Test
+    public void testToStringStartsAndEndsWithNewLine() {
 
+        Job jobFormat = new Job ("Product tester", new Employer("ACME"), new Location("Desert"),
+                new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
+        char startChar = jobFormat.toString().charAt(0);
+        char endChar = jobFormat.toString().charAt(jobFormat.toString().length() - 1);
+
+       assertEquals(startChar, '\n');
+       assertEquals(endChar, '\n');
+
+    }
+
+    @Test
+    public void testToStringContainsCorrectLabelsAndData(){
+       Job madeUpJob = new Job ("Dog Mom", new Employer("Toby, My Dog"), new Location("Home"),
+               new PositionType("Boss"), new CoreCompetency("Love"));
+
+        assertEquals("\nID: " + madeUpJob.getId() + "\nName: Dog Mom\nEmployer: Toby, My Dog\nLocation: Home" +
+                "\nPosition Type: Boss\nCore Competency: Love\n",
+                madeUpJob.toString());
+    }
+
+
+    @Test
+    public void testToStringHandlesEmptyField(){
+        Job emptyJob = new Job("Missing Info", new Employer(""), new Location(""),
+                new PositionType(""), new CoreCompetency("Java"));
+
+        assertEquals("\nID: " + emptyJob.getId() + "\nName: Missing Info\nEmployer: Data not available" +
+                "\nLocation: Data not available" + "\nPosition Type: Data not available\nCore Competency: Java\n",
+                emptyJob.toString());
+    }
 
 }
